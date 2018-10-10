@@ -1275,6 +1275,66 @@ namespace Microsoft.FSharp.Collections
                 let count' = Operators.min count len
                 Microsoft.FSharp.Primitives.Basics.Array.subUnchecked 0 count' array
 
+        let private findExtremeWithComparison<'T when 'T : comparison> (comparisonFunction:'T -> 'T -> bool) (a:'T []) =
+
+            let length = a.GetLength(0)
+
+            let mutable currentExtremeIndex = 0
+            let mutable currentExtremeValue = a.[0]
+
+            for i = 1 to length-1 do
+                if comparisonFunction a.[i] currentExtremeValue then
+                    currentExtremeIndex <- i
+                    currentExtremeValue <- a.[i]
+
+            currentExtremeIndex
+
+        [<CompiledName("IndexOfMin")>]
+        let indexOfMin<'T when 'T : comparison> (array:'T []) =
+            checkNonNull "array" array
+            if array.Length = 0 then 
+                invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString 
+            else
+                findExtremeWithComparison (<) array
+
+        [<CompiledName("IndexOfMax")>]
+        let indexOfMax<'T when 'T : comparison> (array:'T []) =
+            checkNonNull "array" array
+            if array.Length = 0 then 
+                    invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString 
+            else
+                findExtremeWithComparison (>) array
+
+        let private findExtremeByWithComparison<'T, 'U when 'U : comparison> (projection:'T -> 'U) (comparisonFunction:'U -> 'U -> bool) (a:'T []) =
+
+            let length = a.GetLength(0)
+
+            let mutable currentExtremeIndex = 0
+            let mutable currentExtremeValue = projection a.[0]
+
+            for i = 1 to length-1 do
+                if comparisonFunction (projection a.[i]) currentExtremeValue then
+                    currentExtremeIndex <- i
+                    currentExtremeValue <- projection a.[i]
+
+            currentExtremeIndex
+
+        [<CompiledName("IndexOfMinBy")>]
+        let indexOfMinBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (array:'T []) =
+            checkNonNull "array" array
+            if array.Length = 0 then 
+                    invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString 
+            else
+                findExtremeByWithComparison projection (<) array
+
+        [<CompiledName("IndexOfMaxBy")>]
+        let indexOfMaxBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (array:'T []) =
+            checkNonNull "array" array
+            if array.Length = 0 then 
+                    invalidArg "array" LanguagePrimitives.ErrorStrings.InputArrayEmptyString 
+            else
+                findExtremeByWithComparison projection (>) array
+
         module Parallel =
             open System.Threading.Tasks
             
