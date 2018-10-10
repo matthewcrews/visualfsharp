@@ -681,3 +681,62 @@ namespace Microsoft.FSharp.Collections
 
         [<CompiledName("Unfold")>]
         let unfold<'T,'State> (generator:'State -> ('T*'State) option) (state:'State) = Microsoft.FSharp.Primitives.Basics.List.unfold generator state
+
+        let private findExtremeWithComparison<'T when 'T : comparison> (comparer:'T -> 'T -> bool) (list:'T list) =
+            let initialState = 0, 0, list.[0]
+
+            let _, extremeIndex, _ =
+                list
+                |> fold (fun (currentIndex, extremeIndex, extremeValue) elem ->
+                                if comparer elem extremeValue then
+                                    currentIndex + 1, currentIndex, elem
+                                else
+                                    currentIndex + 1, extremeIndex, extremeValue
+                               ) initialState
+            extremeIndex
+
+        [<CompiledName("IndexOfMin")>]
+        let indexOfMin<'T when 'T : comparison> (list:'T list) =
+            checkNonNull "list" list
+            if list.Length = 0 then
+                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
+            else
+            findExtremeWithComparison (<) list
+
+        [<CompiledName("IndexOfMax")>]
+        let indexOfMax<'T when 'T : comparison> (list:'T list) =
+            checkNonNull "list" list
+            if list.Length = 0 then
+                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
+            else
+            findExtremeWithComparison (>) list
+
+        let private findExtremeByWithComparison<'T, 'U when 'U : comparison> (projection:'T -> 'U) (comparer:'U -> 'U -> bool) (list:'T list) =
+            let initialState = 0, 0, projection list.[0]
+
+            let _, extremeIndex, _ =
+                list
+                |> fold (fun (currentIndex, extremeIndex, extremeValue) elem ->
+                                let currentValue = projection elem
+                                if comparer currentValue extremeValue then
+                                    currentIndex + 1, currentIndex, currentValue
+                                else
+                                    currentIndex + 1, extremeIndex, extremeValue
+                               ) initialState
+            extremeIndex
+
+        [<CompiledName("IndexOfMinBy")>]
+        let indexOfMinBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (list:'T list) =
+            checkNonNull "list" list
+            if list.Length = 0 then
+                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
+            else
+            findExtremeByWithComparison projection (<) list
+
+        [<CompiledName("IndexOfMaxBy")>]
+        let indexOfMaxBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (list:'T list) =
+            checkNonNull "list" list
+            if list.Length = 0 then
+                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
+            else
+            findExtremeByWithComparison projection (>) list
