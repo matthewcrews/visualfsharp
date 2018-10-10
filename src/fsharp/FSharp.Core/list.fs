@@ -697,19 +697,17 @@ namespace Microsoft.FSharp.Collections
 
         [<CompiledName("IndexOfMin")>]
         let indexOfMin<'T when 'T : comparison> (list:'T list) =
-            checkNonNull "list" list
-            if list.Length = 0 then
-                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
-            else
-            findExtremeWithComparison (<) list
+            match list with 
+            | [] -> invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | xs ->
+                findExtremeWithComparison (<) xs
 
         [<CompiledName("IndexOfMax")>]
         let indexOfMax<'T when 'T : comparison> (list:'T list) =
-            checkNonNull "list" list
-            if list.Length = 0 then
-                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
-            else
-            findExtremeWithComparison (>) list
+            match list with 
+            | [] -> invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | xs ->
+                findExtremeWithComparison (>) xs
 
         let private findExtremeByWithComparison<'T, 'U when 'U : comparison> (projection:'T -> 'U) (comparer:'U -> 'U -> bool) (list:'T list) =
             let initialState = 0, 0, projection list.[0]
@@ -727,16 +725,14 @@ namespace Microsoft.FSharp.Collections
 
         [<CompiledName("IndexOfMinBy")>]
         let indexOfMinBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (list:'T list) =
-            checkNonNull "list" list
-            if list.Length = 0 then
-                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
-            else
-            findExtremeByWithComparison projection (<) list
+            match list with 
+            | [] -> invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | xs ->
+                findExtremeByWithComparison projection (<) xs
 
         [<CompiledName("IndexOfMaxBy")>]
         let indexOfMaxBy<'T, 'U when 'U : comparison> (projection:'T -> 'U) (list:'T list) =
-            checkNonNull "list" list
-            if list.Length = 0 then
-                invalidArg "list" (SR.GetString(SR.inputListWasEmpty))
-            else
-            findExtremeByWithComparison projection (>) list
+            match list with 
+            | [] -> invalidArg "source" LanguagePrimitives.ErrorStrings.InputSequenceEmptyString
+            | xs ->
+                findExtremeByWithComparison projection (>) xs
