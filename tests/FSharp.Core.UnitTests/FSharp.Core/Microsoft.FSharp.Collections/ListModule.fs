@@ -1026,3 +1026,135 @@ type ListModule() =
         Assert.AreEqual([1,2], List.pairwise [1;2])
         Assert.AreEqual([1,2; 2,3], List.pairwise [1;2;3])
         Assert.AreEqual(["H","E"; "E","L"; "L","L"; "L","O"], List.pairwise ["H";"E";"L";"L";"O"])
+
+    [<Test>]
+    member this.IndexOfMin() =
+        // integer list 1
+        let intList1 = [ 2;4;6;8 ]
+        let resultInt1 = List.indexOfMin intList1
+        if resultInt1 <> 0 then Assert.Fail()
+
+        // integer list 2
+        let intList2 = [ 5;4;3;2;1 ]
+        let resultInt2 = List.indexOfMin intList2
+        if resultInt2 <> 4 then Assert.Fail()
+
+        // string list
+        let strArr1 = ["Broccoli"; "Apple"; "Pear"]
+        let resultInt1 = List.indexOfMin strArr1
+        if resultInt1 <> 1 then Assert.Fail()
+
+        // empty string list
+        let emptyStringArray = List.empty<string> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMin emptyStringArray |> ignore)
+
+        // empty float32 list
+        let emptyFloatArray = List.empty<float32> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMin emptyFloatArray |> ignore)
+        
+        // empty double list
+        let emptyDoubleArray = List.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMin emptyDoubleArray |> ignore)
+
+        // empty decimal list
+        let emptyDecimalArray = List.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> List.indexOfMin emptyDecimalArray |>ignore )
+
+    [<Test>]
+    member this.IndexOfMax() =
+        // integer list 1
+        let intList1 = [ 2;4;6;8 ]
+        let resultInt1 = List.indexOfMax intList1
+        if resultInt1 <> 3 then Assert.Fail()
+
+        // integer list 2
+        let intList2 = [ 5;4;3;2;1 ]
+        let resultInt2 = List.indexOfMax intList2
+        if resultInt2 <> 0 then Assert.Fail()
+
+        // string list
+        let strArr1 = ["Broccoli"; "Apple"; "Pear"]
+        let resultInt1 = List.indexOfMax strArr1
+        if resultInt1 <> 2 then Assert.Fail()
+
+        // empty string list
+        let emptyStringArray = List.empty<string> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMax emptyStringArray |> ignore)
+
+        // empty float32 list
+        let emptyFloatArray = List.empty<float32> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMax emptyFloatArray |> ignore)
+        
+        // empty double list
+        let emptyDoubleArray = List.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMax emptyDoubleArray |> ignore)
+
+        // empty decimal list
+        let emptyDecimalArray = List.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> List.indexOfMax emptyDecimalArray |>ignore )
+
+    [<Test>]
+    member this.indexOfMinByBy() =
+        // integer list 1
+        let intList1 = [ 2;4;6;8 ]
+        let resultInt1 = List.indexOfMinBy (fun x -> -1 * x) intList1
+        if resultInt1 <> 3 then Assert.Fail()
+
+        // integer list 2
+        let intList2 = [ 5;4;3;2;1 ]
+        let resultInt2 = List.indexOfMinBy (fun x -> -1 * x) intList2
+        if resultInt2 <> 0 then Assert.Fail()
+
+        // string list
+        let strArr1 = ["Broccoli"; "Apple"; "Pear"]
+        let resultInt1 = List.indexOfMinBy (fun x -> x + x) strArr1
+        if resultInt1 <> 1 then Assert.Fail()
+
+        // empty string list
+        let emptyStringArray = List.empty<string> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMinBy (fun x -> x + x) emptyStringArray |> ignore)
+
+        // empty float32 list
+        let emptyFloatArray = List.empty<float32> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMinBy (fun x -> x * x) emptyFloatArray |> ignore)
+        
+        // empty double list
+        let emptyDoubleArray = List.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMinBy (fun x -> x * x) emptyDoubleArray |> ignore)
+
+        // empty decimal list
+        let emptyDecimalArray = List.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> List.indexOfMinBy (fun x -> x * x) emptyDecimalArray |>ignore )
+
+    [<Test>]
+    member this.indexOfMaxBy() =
+        // integer list 1
+        let intList1 = [ 2;4;6;8 ]
+        let resultInt1 = List.indexOfMaxBy (fun x -> -1 * x) intList1
+        if resultInt1 <> 0 then Assert.Fail()
+
+        // integer list 2
+        let intList2 = [ 5;4;3;2;1 ]
+        let resultInt2 = List.indexOfMaxBy (fun x -> -1 * x) intList2
+        if resultInt2 <> 4 then Assert.Fail()
+
+        // string list
+        let strArr1 = ["Broccoli"; "Apple"; "Pear"]
+        let resultInt1 = List.indexOfMaxBy (fun x -> x + x) strArr1
+        if resultInt1 <> 2 then Assert.Fail()
+
+        // empty string list
+        let emptyStringArray = List.empty<string> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMaxBy (fun x -> x + x) emptyStringArray |> ignore)
+
+        // empty float32 list
+        let emptyFloatArray = List.empty<float32> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMaxBy (fun x -> x * x) emptyFloatArray |> ignore)
+        
+        // empty double list
+        let emptyDoubleArray = List.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> List.indexOfMaxBy (fun x -> x * x) emptyDoubleArray |> ignore)
+
+        // empty decimal list
+        let emptyDecimalArray = List.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> List.indexOfMaxBy (fun x -> x * x) emptyDecimalArray |>ignore )
