@@ -1662,3 +1662,151 @@ type ArrayModule() =
         // null array
         let nullArr = null:string[]
         CheckThrowsArgumentNullException (fun () -> Array.contains "empty" nullArr |> ignore)
+
+    [<Test>]
+    member this.IndexOfMin() =
+        // integer array 1
+        let intArr1 = [| 2;4;6;8 |]
+        let resultInt1 = Array.indexOfMin intArr1
+        if resultInt1 <> 0 then Assert.Fail()
+
+        // integer array 2
+        let intArr2 = [| 5;4;3;2;1 |]
+        let resultInt2 = Array.indexOfMin intArr2
+        if resultInt2 <> 4 then Assert.Fail()
+
+        // string array
+        let strArr1 = [|"Broccoli"; "Apple"; "Pear"|]
+        let resultInt1 = Array.indexOfMin strArr1
+        if resultInt1 <> 1 then Assert.Fail()
+
+        // empty string array
+        let emptyStringArray = Array.empty<string> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMin emptyStringArray |> ignore)
+
+        // empty float32 array
+        let emptyFloatArray = Array.empty<float32> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMin emptyFloatArray |> ignore)
+        
+        // empty double array
+        let emptyDoubleArray = Array.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMin emptyDoubleArray |> ignore)
+
+        // empty decimal array
+        let emptyDecimalArray = Array.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> Array.indexOfMin emptyDecimalArray |>ignore )
+
+        // null array
+        let nullArr = null:string[]
+        CheckThrowsArgumentNullException (fun () -> Array.indexOfMin nullArr |> ignore)
+
+    [<Test>]
+    member this.IndexOfMax() =
+        // integer array 1
+        let intArr1 = [| 2;4;6;8 |]
+        let resultInt1 = Array.indexOfMax intArr1
+        if resultInt1 <> 3 then Assert.Fail()
+
+        // integer array 2
+        let intArr2 = [| 5;4;3;2;1 |]
+        let resultInt2 = Array.indexOfMax intArr2
+        if resultInt2 <> 0 then Assert.Fail()
+
+        // string array
+        let strArr1 = [|"Broccoli"; "Apple"; "Pear"|]
+        let resultInt1 = Array.indexOfMax strArr1
+        if resultInt1 <> 2 then Assert.Fail()
+
+        // empty string array
+        let emptyStringArray = Array.empty<string> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMax emptyStringArray |> ignore)
+
+        // empty float32 array
+        let emptyFloatArray = Array.empty<float32> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMax emptyFloatArray |> ignore)
+        
+        // empty double array
+        let emptyDoubleArray = Array.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMax emptyDoubleArray |> ignore)
+
+        // empty decimal array
+        let emptyDecimalArray = Array.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> Array.indexOfMax emptyDecimalArray |>ignore )
+
+        // null array
+        let nullArr = null:string[]
+        CheckThrowsArgumentNullException (fun () -> Array.indexOfMax nullArr |> ignore)
+
+    [<Test>]
+    member this.indexOfMinByBy() =
+        // integer array 1
+        let intArr1 = [| 2;4;6;8 |]
+        let resultInt1 = Array.indexOfMinBy (fun x -> -1 * x) intArr1
+        if resultInt1 <> 3 then Assert.Fail()
+
+        // integer array 2
+        let intArr2 = [| 5;4;3;2;1 |]
+        let resultInt2 = Array.indexOfMinBy (fun x -> -1 * x) intArr2
+        if resultInt2 <> 0 then Assert.Fail()
+
+        // string array
+        let strArr1 = [|"Broccoli"; "Apple"; "Pear"|]
+        let resultInt1 = Array.indexOfMinBy (fun x -> x + x) strArr1
+        if resultInt1 <> 1 then Assert.Fail()
+
+        // empty string array
+        let emptyStringArray = Array.empty<string> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMinBy (fun x -> x + x) emptyStringArray |> ignore)
+
+        // empty float32 array
+        let emptyFloatArray = Array.empty<float32> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMinBy (fun x -> x * x) emptyFloatArray |> ignore)
+        
+        // empty double array
+        let emptyDoubleArray = Array.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMinBy (fun x -> x * x) emptyDoubleArray |> ignore)
+
+        // empty decimal array
+        let emptyDecimalArray = Array.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> Array.indexOfMinBy (fun x -> x * x) emptyDecimalArray |>ignore )
+
+        // null array
+        let nullArr = null:string[]
+        CheckThrowsArgumentNullException (fun () -> Array.indexOfMinBy (fun x -> x + x) nullArr |> ignore)
+
+    [<Test>]
+    member this.indexOfMaxBy() =
+        // integer array 1
+        let intArr1 = [| 2;4;6;8 |]
+        let resultInt1 = Array.indexOfMaxBy (fun x -> -1 * x) intArr1
+        if resultInt1 <> 0 then Assert.Fail()
+
+        // integer array 2
+        let intArr2 = [| 5;4;3;2;1 |]
+        let resultInt2 = Array.indexOfMaxBy (fun x -> -1 * x) intArr2
+        if resultInt2 <> 4 then Assert.Fail()
+
+        // string array
+        let strArr1 = [|"Broccoli"; "Apple"; "Pear"|]
+        let resultInt1 = Array.indexOfMaxBy (fun x -> x + x) strArr1
+        if resultInt1 <> 2 then Assert.Fail()
+
+        // empty string array
+        let emptyStringArray = Array.empty<string> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMaxBy (fun x -> x + x) emptyStringArray |> ignore)
+
+        // empty float32 array
+        let emptyFloatArray = Array.empty<float32> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMaxBy (fun x -> x * x) emptyFloatArray |> ignore)
+        
+        // empty double array
+        let emptyDoubleArray = Array.empty<System.Double> 
+        CheckThrowsArgumentException(fun () -> Array.indexOfMaxBy (fun x -> x * x) emptyDoubleArray |> ignore)
+
+        // empty decimal array
+        let emptyDecimalArray = Array.empty<System.Decimal> 
+        CheckThrowsArgumentException (fun () -> Array.indexOfMaxBy (fun x -> x * x) emptyDecimalArray |>ignore )
+
+        // null array
+        let nullArr = null:string[]
+        CheckThrowsArgumentNullException (fun () -> Array.indexOfMaxBy (fun x -> x + x) nullArr |> ignore)
